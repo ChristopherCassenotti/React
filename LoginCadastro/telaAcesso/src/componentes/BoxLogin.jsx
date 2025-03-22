@@ -17,6 +17,7 @@ function BoxLogin() {
           name="senha"
           placeholder="Senha:"
         />
+
         <button className="w-full p-2 bg-red-500 cursor-pointer hover:bg-green-200 transition-all duration-300 hover:text-black transition-all duration-300">
           Login
         </button>
