@@ -1,28 +1,34 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import AddTask from "./componetes/AddTask";
 import Task from "./componetes/Task";
+import { v4 } from "uuid";
 
 function App() {
-  const [task, setTasks] = useState([
-    {
-      id: 1,
-      title: "Estudar programação",
-      description: "Estudar programação para se tornar um dev full stack.",
-      isCompleted: false,
-    },
-    {
-      id: 2,
-      title: "Estudar inglês",
-      description: "Estudar inglês para se tornar fluente.",
-      isCompleted: false,
-    },
-    {
-      id: 3,
-      title: "Estudar matemática",
-      description: "Estudar matemática porque é a melhor matéria.",
-      isCompleted: false,
-    },
-  ]);
+  const [task, setTasks] = useState(
+    JSON.parse(localStorage.getItem("tasks")) || []
+  );
+
+  useEffect(() => {
+    localStorage.setItem("tasks", JSON.stringify(task));
+  }, [task]);
+
+  useEffect(() => {
+    //FAZ O REQUERIMENTO
+    const fetchTasks = async () => {
+      const response = await fetch(
+        "https://jsonplaceholder.typicode.com/todos?_limit=10",
+        {
+          method: "GET",
+        }
+      );
+      //ARMAZENA O REQUERIMENTO
+      const data = await response.json();
+
+      //COLOCA NO STATE DA LISTA
+      setTasks(data);
+    };
+    fetchTasks();
+  }, []);
 
   function onTaskClick(taskId) {
     const newTask = task.map((task) => {
@@ -41,7 +47,7 @@ function App() {
 
   function onAddTaskSubmit(title, description) {
     const newTask = {
-      id: task.length + 2,
+      id: v4(),
       title,
       description,
       isCompleted: false,
@@ -50,7 +56,7 @@ function App() {
   }
 
   return (
-    <div className="w-screen h-screen bg-slate-500 flex justify-center p-6">
+    <div className="w-full min-h-screen bg-slate-500 flex justify-center p-6">
       <div className="w-[500px] space-y-4">
         <h1 className="text-3xl text-slate-100 font-bold text-center">
           Gerenciador de Tarefas
