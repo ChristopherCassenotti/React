@@ -1,13 +1,22 @@
-function BoxMostrarCadastro({ cadastros }) {
+function BoxMostrarCadastro({ cadastro, deleteCadastro }) {
   return (
     <ul className="flex flex-col gap-4">
-      {cadastros.map((cadastros) => (
-        <li className="flex gap-2" key={cadastros.nome}>
-          <p className="w-md p-6 bg-slate-800 text-white shadow-xl flex flex-col text-center">
-            Nome: {cadastros.nome} <br />
-            Email: {cadastros.email} <br />
-            Idade: {cadastros.idade}
+      {cadastro.map((cadastro) => (
+        <li
+          key={cadastro.id}
+          className="max-h-max w-lx p-15 bg-slate-800 text-white shadow-xl flex flex-col justify-center items-center gap-4 my-10"
+        >
+          <p className="flex flex-col gap-2 ">
+            <span>Nome: {cadastro.nome}</span>
+            <span>Email: {cadastro.email}</span>
+            <span>Idade: {cadastro.idade}</span>
           </p>
+          <button
+            onClick={() => deleteCadastro(cadastro.id)}
+            className="ml-auto bg-red-500 px-4 py-2 rounded hover:bg-red-600 transition-all"
+          >
+            Delete
+          </button>
         </li>
       ))}
     </ul>

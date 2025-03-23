@@ -1,12 +1,12 @@
 import { useState } from "react";
 
-function BoxCadastro({ newCadastro }) {
-  const [nome, setNome] = useState("");
-  const [email, setEmail] = useState("");
-  const [idade, setIdade] = useState("");
+function BoxCadastro({ addCadastro }) {
+  const [nome, setNome] = useState([""]);
+  const [email, setEmail] = useState([""]);
+  const [idade, setIdade] = useState([""]);
 
   return (
-    <div className=" w-md p-15 bg-slate-800 text-white shadow-xl flex flex-col gap-4 my-10">
+    <div className=" max-h-max w-md p-15 bg-slate-800 text-white shadow-xl flex flex-col gap-4 my-10">
       <h1 className="font-bold text-2xl underline mb-10">Cadastro</h1>
       <label htmlFor="nome">Nome</label>
       <input
@@ -40,11 +40,10 @@ function BoxCadastro({ newCadastro }) {
         className="w-full p-2 bg-red-500 cursor-pointer hover:bg-green-200 hover:text-black transition-all duration-300"
         onClick={() => {
           if (!nome.trim() || !email.trim() || !idade.trim()) {
-            alert("Preencha todos os campos");
-            return;
+            return alert("Preencha os campos");
           }
           return (
-            newCadastro(nome, email, idade),
+            addCadastro(nome, email, idade),
             setNome(""),
             setEmail(""),
             setIdade("")
